@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -40,40 +42,59 @@ fun ObjectDetectionScreen(viewModel: ObjectDetectionViewModel = viewModel()) {
         }
     )
 
-    Column(Modifier.fillMaxSize().padding(16.dp)) {
-        Text("Object Detection", style = MaterialTheme.typography.headlineLarge)
-
-        Button(onClick = { launcher.launch("image/*") }) {
-            Text("Pick Image")
-        }
-
-        Spacer(Modifier.height(8.dp))
-
-        state.bitmap?.let { bitmap ->
-            Image(bitmap = bitmap.asImageBitmap(), contentDescription = null,
+    Scaffold(
+        topBar = {
+            Text(
+                "Object Detection",
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp),
-                contentScale = ContentScale.Crop)
+                    .statusBarsPadding()
+                    .padding(16.dp),
+                style = MaterialTheme.typography.headlineLarge
+            )
+        }
+    ) { paddingValues ->
+
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(horizontal = 16.dp)
+        ) {
+
+            Button(onClick = { launcher.launch("image/*") }) {
+                Text("Pick Image")
+            }
 
             Spacer(Modifier.height(8.dp))
 
-            Button(onClick = { viewModel.onEvent(ObjectDetectionEvent.OnDetectObjects) }) {
-                Text("Detect Objects")
-            }
+            state.bitmap?.let { bitmap ->
+                Image(
+                    bitmap = bitmap.asImageBitmap(), contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp),
+                    contentScale = ContentScale.Crop
+                )
 
-            if (state.isLoading) CircularProgressIndicator()
+                Spacer(Modifier.height(8.dp))
 
-            if (state.detectedObjects.isNotEmpty()) {
-                Text("Detected Objects: ${state.detectedObjects.size}")
-                state.detectedObjects.forEachIndexed { index, obj ->
-                    val label = obj.labels.firstOrNull()?.text ?: "Unknown"
-                    Text("Object $index: $label")
+                Button(onClick = { viewModel.onEvent(ObjectDetectionEvent.OnDetectObjects) }) {
+                    Text("Detect Objects")
                 }
-            }
 
-            if (state.error != null) {
-                Text("Error: ${state.error}", color = Color.Red)
+                if (state.isLoading) CircularProgressIndicator()
+
+                if (state.detectedObjects.isNotEmpty()) {
+                    Text("Detected Objects: ${state.detectedObjects.size}")
+                    state.detectedObjects.forEachIndexed { index, obj ->
+                        val label = obj.labels.firstOrNull()?.text ?: "Unknown"
+                        Text("Object $index: $label")
+                    }
+                }
+
+                if (state.error != null) {
+                    Text("Error: ${state.error}", color = Color.Red)
+                }
             }
         }
     }

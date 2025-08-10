@@ -9,14 +9,22 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
@@ -43,47 +51,54 @@ fun TextRecognitionScreen(
         }
     )
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp)) {
-
-        Text("Text Recognition", style = MaterialTheme.typography.headlineLarge)
-
-        Spacer(Modifier.height(12.dp))
-
-        Button(onClick = { imagePickerLauncher.launch("image/*") }) {
-            Text("Pick Image")
+    Scaffold(
+        topBar = {
+            Text("Text Recognition",modifier= Modifier.statusBarsPadding().padding(16.dp), style = MaterialTheme.typography.headlineLarge)
         }
+    ) {paddingValues ->
 
-        Spacer(Modifier.height(12.dp))
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(horizontal = 16.dp).verticalScroll(rememberScrollState())
+        ) {
 
-        state.imageBitmap?.let { bitmap ->
-            Image(
-                bitmap = bitmap.asImageBitmap(),
-                contentDescription = "Selected Image",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp),
-                contentScale = ContentScale.Crop
-            )
-
-            Spacer(Modifier.height(8.dp))
-
-            Button(onClick = { viewModel.onEvent(TextRecognitionEvent.OnRecognizeText) }) {
-                Text("Recognize Text")
+            Button(onClick = { imagePickerLauncher.launch("image/*") }) {
+                Text("Pick Image")
             }
 
-            Spacer(Modifier.height(8.dp))
-        }
+            Spacer(Modifier.height(12.dp))
 
-        when {
-            state.isLoading -> CircularProgressIndicator()
-            state.recognizedText.isNotBlank() -> {
-                Text("Result:", fontWeight = FontWeight.Bold)
-                Text(state.recognizedText)
+            state.imageBitmap?.let { bitmap ->
+                Image(
+                    bitmap = bitmap.asImageBitmap(),
+                    contentDescription = "Selected Image",
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .align(Alignment.CenterHorizontally),
+                    contentScale = ContentScale.Fit
+                )
+
+                Spacer(Modifier.height(8.dp))
+
+                Button(onClick = { viewModel.onEvent(TextRecognitionEvent.OnRecognizeText) }) {
+                    Text("Recognize Text")
+                }
+
+                Spacer(Modifier.height(8.dp))
             }
-            state.error != null -> {
-                Text("Error: ${state.error}", color = Color.Red)
+
+            when {
+                state.isLoading -> CircularProgressIndicator()
+                state.recognizedText.isNotBlank() -> {
+                    Text("Result:", fontWeight = FontWeight.Bold)
+                    Text(state.recognizedText)
+                }
+
+                state.error != null -> {
+                    Text("Error: ${state.error}", color = Color.Red)
+                }
             }
         }
     }
