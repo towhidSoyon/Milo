@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.towhid.mlkit.presentation.HomeScreen
+import com.towhid.mlkit.presentation.SplashScreen
 import com.towhid.mlkit.presentation.facedetection.FaceDetectionScreen
 import com.towhid.mlkit.presentation.languagedetection.LanguageIdScreen
 import com.towhid.mlkit.presentation.objectdetection.ObjectDetectionScreen
@@ -15,12 +16,15 @@ import com.towhid.mlkit.presentation.textrecognition.TextRecognitionScreen
 fun MLKitApp() {
     val navController = rememberNavController()
 
-    NavHost(navController, startDestination = "home") {
+    NavHost(navController, startDestination = "splash") {
+        composable("splash") { SplashScreen { navController.navigate("home"){
+            popUpTo("splash") { inclusive = true }
+        } } }
         composable("home") { HomeScreen(navController) }
-        composable("textRecognition") { TextRecognitionScreen() }
-        composable("faceDetection") { FaceDetectionScreen() }
-        composable("objectDetection") { ObjectDetectionScreen() }
+        composable("textRecognition") { TextRecognitionScreen(navController) }
+        composable("faceDetection") { FaceDetectionScreen(navController) }
+        composable("objectDetection") { ObjectDetectionScreen(navController) }
         composable("smartReply") { SmartReplyScreen() }
-        composable("languageId") { LanguageIdScreen() }
+        composable("languageId") { LanguageIdScreen(navController) }
     }
 }

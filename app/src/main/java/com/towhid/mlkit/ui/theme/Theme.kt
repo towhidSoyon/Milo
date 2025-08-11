@@ -9,29 +9,53 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+// 🎨 Your brand colors
+val PrimaryColor = Color(0xFF036C61)
+val OnPrimaryColor = Color.White
+
+val SecondaryColor = Color(0xFF4FB3A5)
+val OnSecondaryColor = Color.White
+
+val TertiaryColor = Color(0xFF84DCC6)
+val OnTertiaryColor = Color.Black
+
+val BackgroundLight = Color(0xFFFFFFFF)
+val OnBackgroundLight = Color(0xFF000000)
+
+val BackgroundDark = Color(0xFF121212)
+val OnBackgroundDark = Color(0xFFFFFFFF)
+
+// 🌞 Light theme colors
+private val LightColors = lightColorScheme(
+    primary = PrimaryColor,
+    onPrimary = OnPrimaryColor,
+    secondary = SecondaryColor,
+    onSecondary = OnSecondaryColor,
+    tertiary = TertiaryColor,
+    onTertiary = OnTertiaryColor,
+    background = BackgroundLight,
+    onBackground = OnBackgroundLight,
+    surface = Color.White,
+    onSurface = Color.Black
 )
 
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+// 🌙 Dark theme colors
+private val DarkColors = darkColorScheme(
+    primary = PrimaryColor,
+    onPrimary = OnPrimaryColor,
+    secondary = SecondaryColor,
+    onSecondary = OnSecondaryColor,
+    tertiary = TertiaryColor,
+    onTertiary = OnTertiaryColor,
+    background = BackgroundDark,
+    onBackground = OnBackgroundDark,
+    surface = Color(0xFF1E1E1E),
+    onSurface = Color.White
 )
+
 
 @Composable
 fun MLKitTheme(
@@ -41,13 +65,13 @@ fun MLKitTheme(
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+        /*dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+*/
+        darkTheme -> DarkColors
+        else -> LightColors
     }
 
     MaterialTheme(

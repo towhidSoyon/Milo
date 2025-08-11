@@ -5,6 +5,7 @@ import com.google.mlkit.nl.languageid.LanguageIdentification
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import java.util.Locale
 
 
 class LanguageIdViewModel : ViewModel() {
@@ -28,7 +29,9 @@ class LanguageIdViewModel : ViewModel() {
 
                 languageIdentifier.identifyLanguage(input)
                     .addOnSuccessListener { langCode ->
-                        _state.update { it.copy(languageCode = langCode, isLoading = false) }
+                        val locale = Locale.forLanguageTag(langCode)
+                        val languageName = locale.getDisplayLanguage(Locale.ENGLISH)
+                        _state.update { it.copy(languageCode = languageName, isLoading = false) }
                     }
                     .addOnFailureListener {
                         _state.update { it.copy(error = it.error, isLoading = false) }
