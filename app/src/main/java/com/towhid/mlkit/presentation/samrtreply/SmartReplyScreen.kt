@@ -22,10 +22,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun SmartReplyScreen(viewModel: SmartReplyViewModel = viewModel()) {
+fun SmartReplyScreen(viewModel: SmartReplyViewModel = koinViewModel()) {
     val state by viewModel.state.collectAsState()
     var message by remember { mutableStateOf("") }
 

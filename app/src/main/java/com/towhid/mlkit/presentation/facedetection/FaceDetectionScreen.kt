@@ -47,14 +47,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
 import com.towhid.mlkit.R
 import com.towhid.mlkit.presentation.textrecognition.TextRecognitionEvent
 
 @Composable
 fun FaceDetectionScreen(
-    navController: NavController, viewModel: FaceDetectionViewModel = viewModel()
+    navController: NavController, viewModel: FaceDetectionViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
     val state by viewModel.state.collectAsState()

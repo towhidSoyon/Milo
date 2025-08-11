@@ -72,4 +72,8 @@ dependencies {
     implementation("androidx.camera:camera-core:1.4.2")
 // Kotlin
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
+
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.koin.androidx.viewmodel)
 }
