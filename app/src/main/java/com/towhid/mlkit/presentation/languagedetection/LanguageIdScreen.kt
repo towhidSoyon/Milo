@@ -40,14 +40,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
 import com.towhid.mlkit.R
 
 @Composable
 fun LanguageIdScreen(
     navController: NavController,
-    viewModel: LanguageIdViewModel = viewModel()
+    viewModel: LanguageIdViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsState()
 
