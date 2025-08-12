@@ -65,6 +65,7 @@ dependencies {
     implementation("com.google.mlkit:object-detection:17.0.2")
     implementation("com.google.mlkit:smart-reply:17.0.4")
     implementation("com.google.mlkit:language-id:17.0.4")
+    implementation("com.google.mlkit:barcode-scanning:17.0.3")
 // CameraX
     implementation("androidx.camera:camera-camera2:1.4.2")
     implementation("androidx.camera:camera-lifecycle:1.4.2")

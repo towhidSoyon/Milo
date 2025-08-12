@@ -37,41 +37,6 @@ import androidx.navigation.NavController
 import com.towhid.mlkit.R
 import com.towhid.mlkit.ui.theme.PrimaryColor
 
-/*
-@Composable
-fun HomeScreen(navController: NavController) {
-
-    Scaffold(
-        topBar = {
-            Text("MiLo",modifier= Modifier.statusBarsPadding().padding(16.dp), style = MaterialTheme.typography.headlineLarge)
-        }
-    ) { paddingValues ->
-        Column(modifier = Modifier.fillMaxSize().padding(paddingValues)
-            .padding(horizontal = 16.dp)) {
-
-            val buttons = listOf(
-                "Text Recognition" to "textRecognition",
-                "Face Detection" to "faceDetection",
-                "Object Detection" to "objectDetection",
-                "Smart Reply" to "smartReply",
-                "Language Identification" to "languageId"
-            )
-
-            buttons.forEach { (label, route) ->
-                Button(
-                    onClick = { navController.navigate(route) },
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
-                ) {
-                    Text(label)
-                }
-            }
-        }
-    }
-
-}
-*/
-
-
 @Composable
 fun HomeScreen(navController: NavController) {
     Scaffold(
@@ -122,7 +87,8 @@ fun HomeScreen(navController: NavController) {
                 Triple("Face Detection", painterResource(R.drawable.fdicon), "faceDetection"),
                 Triple("Object Detection", painterResource(R.drawable.odicon), "objectDetection"),
                 Triple("Smart Reply", painterResource(R.drawable.sricon), "smartReply"),
-                Triple("Language Identification", painterResource(R.drawable.liicon), "languageId")
+                Triple("Language Identification", painterResource(R.drawable.liicon), "languageId"),
+                Triple("Barcode Scanner", painterResource(R.drawable.barcode), "barcodeScanner")
             )
 
             LazyVerticalGrid(
